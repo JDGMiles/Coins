@@ -7,38 +7,39 @@
 </head>
 
 <body><center id="desk">
-  <table>
-    <tr>
-      <td id="H0" onclick="flip(0)" class="holder"><img id="0"></img></td>
-      <td id="H1" class="holder"><img id="1" onclick="flip(1)"></img></td>
-      <td id="H2" class="holder"><img id="2" onclick="flip(2)"></img></td>
-      <td id="H3" class="holder"><img id="3" onclick="flip(3)"></img></td>
-      <td id="H4" class="holder"><img id="4" onclick="flip(4)"></img></td>
-    </tr>
-  </table>
 </center></body>
 </html>
 
 <script type="text/javascript">
 
+var coinfaces=[["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"]];
+
 var coinwidth=120;
 var coinheight=coinwidth;
 
-var columns=5;
+var columns=3;
 var deskcontents="";
 
-var coinfaces=[["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"]];
+for(i=0; i<Math.floor(coinfaces.length/columns); i++){
+  deskcontents=deskcontents+"<table><tr>";
+  for(j=0; j<columns; j++){
+    deskcontents=deskcontents+"<td style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\"H"+(columns*i+j)+"\" onclick=\"flip("+(columns*i+j)+")\" class=\"holder\"><img style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\""+(columns*i+j)+"\" src=\""+coinfaces[(columns*i+j)][0]+"\" draggable=\"false\"></img></td>"
+  }
+  deskcontents=deskcontents+"</tr></table>"
+}
+
+if(coinfaces.length%columns!=0){deskcontents=deskcontents+"<table><tr>";}
+
+for(i=0; i<coinfaces.length%columns; i++){
+  deskcontents=deskcontents+"<td style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\"H"+(columns*Math.floor(coinfaces.length/columns)+i)+"\" onclick=\"flip("+(columns*Math.floor(coinfaces.length/columns)+i)+")\" class=\"holder\"><img style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\""+(columns*Math.floor(coinfaces.length/columns)+i)+"\" src=\""+coinfaces[columns*Math.floor(coinfaces.length/columns)+i][0]+"\" draggable=\"false\"></img></td>"
+}
+
+if(coinfaces.length%columns!=0){deskcontents=deskcontents+"</tr></table>"}
+
+document.getElementById("desk").innerHTML=deskcontents;
 
 var coinstate=[];
 for(i=0; i<coinfaces.length; i++){coinfaces[i].push("Tick.png"); coinstate[i]={flipping:0, t:0, side:0, faces:coinfaces[i]}}
-
-for(i=0; i<coinfaces.length; i++){
-  document.getElementById("H"+i).style.width=coinwidth+"px";
-  document.getElementById("H"+i).style.height=coinheight+"px";
-  document.getElementById(i).style.width=coinwidth+"px";
-  document.getElementById(i).style.height=coinheight+"px";
-  document.getElementById(i).src=coinfaces[i][0];
-}
 
 var time=0;
 var maxtime=14;
