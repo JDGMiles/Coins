@@ -1,0 +1,66 @@
+<!DOCTYPE html><html><head><title>Coins</title>
+
+<meta name="viewport" content="width=580, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="shortcut icon" href="favicon.ico">
+
+</head>
+
+<body><center id="desk">
+  <table>
+    <tr>
+      <td id="H0" onclick="flip(0)" class="holder"><img id="0"></img></td>
+      <td id="H1" class="holder"><img id="1" onclick="flip(1)"></img></td>
+      <td id="H2" class="holder"><img id="2" onclick="flip(2)"></img></td>
+      <td id="H3" class="holder"><img id="3" onclick="flip(3)"></img></td>
+      <td id="H4" class="holder"><img id="4" onclick="flip(4)"></img></td>
+    </tr>
+  </table>
+</center></body>
+</html>
+
+<script type="text/javascript">
+
+var coinwidth=120;
+var coinheight=coinwidth;
+
+var columns=5;
+var deskcontents="";
+
+var coinfaces=[["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"]];
+
+var coinstate=[];
+for(i=0; i<coinfaces.length; i++){coinfaces[i].push("Tick.png"); coinstate[i]={flipping:0, t:0, side:0, faces:coinfaces[i]}}
+
+for(i=0; i<coinfaces.length; i++){
+  document.getElementById("H"+i).style.width=coinwidth+"px";
+  document.getElementById("H"+i).style.height=coinheight+"px";
+  document.getElementById(i).style.width=coinwidth+"px";
+  document.getElementById(i).style.height=coinheight+"px";
+  document.getElementById(i).src=coinfaces[i][0];
+}
+
+var time=0;
+var maxtime=14;
+var fps=60;
+
+function flip(clickedcoin){
+  coinstate[clickedcoin].side=(coinstate[clickedcoin].side+1)%coinfaces[clickedcoin].length;
+  coinstate[clickedcoin].flipping=1;
+  coinstate[clickedcoin].t=time;
+}
+
+function progressframe(){
+  time++;
+  if(time>maxtime){time=0}
+  for(i=0; i<coinfaces.length; i++){
+    if(coinstate[i].flipping==1){document.getElementById(i).style.width=(Math.cos(2*Math.PI*(time-coinstate[i].t)/maxtime)+1)*coinwidth/2+"px";}
+    if(Math.abs(time-coinstate[i].t)==maxtime/2){document.getElementById(i).src=coinstate[i].faces[coinstate[i].side];}
+    if(coinstate[i].t==time){coinstate[i].flipping=0;}
+  }
+  setTimeout(progressframe, 1000/fps)
+}
+
+progressframe();
+
+</script>

@@ -1,0 +1,10 @@
+html {display: table; margin: auto;}
+html, body {height: 100%;}
+
+@font-face {font-family: Liberation Serif; src: url(../jdgmiles.github.io/LiberationSerif.woff);}
+
+::selection {background-color:none; color:none;}
+img{user-select: none;}
+
+body {background-color:black; color:white; vertical-align:middle; display: table-cell;}
+.holder {text-align:center}
