@@ -1,23 +1,25 @@
-<!DOCTYPE html><html><head><title>Coins</title>
+<!DOCTYPE html><html>
 
+<head><title>Coins</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="style.css">
 <link rel="shortcut icon" href="favicon.ico">
-
 </head>
 
-<body><center id="desk">
-</center></body>
+<body><center id="desk"></center></body>
+
 </html>
 
 <script type="text/javascript">
 
-var coinfaces=[["3S.png", "TTT2.png", "VF5FT.png"], ["3S.png"], ["3S.png"], ["3S.png"], ["3S.png"]];
+var coinfaces=[["TTT2.png"], ["VF5.png", "VF5FT.png"], ["3S.png"], ["ST.png"], ["USFIV.png"], ["SFV.png"], ["KoF98.png", "KoF2002.png", "KoFXIII.gif"], ["MotW.png"], ["SC2.png"], ["Hearthstone.png"], ["PTCGO.png"], ["MtG.png"], ["Bridge.png"], ["Ikaruga.png", "RadiantSilvergun.png"], ["Cello.png"], ["Piano.png"], ["Keyboard.png"], ["Guitar.png"], ["Bridge.png"], ["Japanese.png"], ["German.png"], ["French.png"], ["Stretch.png"], ["PU.png"], ["SU.png"], ["SQ.png"], ["Run.png"], ["Cycle.png"], ["Swim.png"], ["Weights.png"], ["Writing.png"], ["Graphics.png"], ["Reading.png"], ["Coding.png"], ["Maths.png"], ["Internet.png"], ["ASMR.png"], ["Meditation.png"], ["Tidy.png"], ["Wipe.png"], ["Hoover.png"], ["Shave.png"], ["Shower.png"], ["Cards.png"], ["Film.png"]];
 
-var coinwidth=180;
+
+var columns=Math.round(Math.sqrt(coinfaces.length))+1;
+
+var coinwidth=Math.floor(750/columns);
 var coinheight=coinwidth;
 
-var columns=3;
 var deskcontents="";
 
 for(i=0; i<Math.floor(coinfaces.length/columns); i++){
@@ -56,8 +58,8 @@ function progressframe(){
   if(time>maxtime){time=0}
   for(i=0; i<coinfaces.length; i++){
     if(coinstate[i].flipping==1){document.getElementById(i).style.width=(Math.cos(2*Math.PI*(time-coinstate[i].t)/maxtime)+1)*coinwidth/2+"px";}
-    if(Math.abs(time-coinstate[i].t)==maxtime/2){document.getElementById(i).src=coinstate[i].faces[coinstate[i].side];}
-    if(coinstate[i].t==time){coinstate[i].flipping=0;}
+    if(Math.abs(time-coinstate[i].t)==maxtime/2 && coinstate[i].flipping==1){document.getElementById(i).src=coinstate[i].faces[coinstate[i].side];}
+    if(coinstate[i].t==time && coinstate[i].flipping==1){coinstate[i].flipping=0;}
   }
   setTimeout(progressframe, 1000/fps)
 }
