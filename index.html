@@ -18,7 +18,7 @@ var coinfaces=[["FreshAir.gif", "Exercise.gif"], ["Cleaning.gif"], ["Bathing.gif
 var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999)+1;
 var rows=Math.round(coinfaces.length/columns+0.4999);
 
-var coinwidth=Math.min(Math.floor(1300/columns), Math.floor(650/rows));
+var coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));
 var coinheight=coinwidth;
 
 var deskcontents="";
@@ -49,7 +49,7 @@ for(i=0; i<coinfaces.length; i++){
 }
 
 var time=0;
-var maxtime=14;
+var maxtime=8;
 var fps=60;
 
 function flip(clickedcoin){
@@ -73,6 +73,19 @@ function progressframe(){
   setTimeout(progressframe, 1000/fps)
 }
 
+function dynamicresize(){
+  coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));
+  coinheight=coinwidth;
+  for(i=0; i<coinfaces.length; i++){
+    document.getElementById("H"+i).style.width=coinwidth+"px";
+    document.getElementById("H"+i).style.height=coinheight+"px";
+    document.getElementById(i).style.width=coinwidth+"px";
+    document.getElementById(i).style.height=coinheight+"px";
+  }
+  setTimeout(dynamicresize, 1000/fps);
+}
+
 progressframe();
+dynamicresize();
 
 </script>
