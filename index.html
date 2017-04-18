@@ -12,13 +12,13 @@
 
 <script type="text/javascript">
 
-var coinfaces=[["PTCGO.gif"], ["MtG.gif"], ["Hearthstone.gif"], ["SC2.gif"]];
+var coinfaces=[["FreshAir.gif", "Exercise.gif"], ["Cleaning.gif"], ["Bathing.gif"], ["Food.gif"], ["Work1.gif"], ["Work2.gif"], ["Hearthstone.gif"], ["PTCGO.gif"], ["MtG.gif"], ["Bridge.gif"], ["Ikaruga.png", "RadiantSilvergun.png"], ["Japanese.png", "German.png", "French.png"], ["Piano.png", "Keyboard.png"], ["Cello.png", "Guitar.png"], ["VF5.gif", "Tekken.gif"], ["3S.gif", "Garou.gif", "KoF2002.gif", "KoFXIII.gif"], ["Music.gif", "Film.gif", "Books.gif"], ["SC2.gif"]];
 
 
-var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999);
-var rows=Math.floor(coinfaces.length/columns);
+var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999)+1;
+var rows=Math.round(coinfaces.length/columns+0.4999);
 
-var coinwidth=Math.min(Math.floor(850/columns), Math.floor(600/rows));
+var coinwidth=Math.min(Math.floor(1300/columns), Math.floor(650/rows));
 var coinheight=coinwidth;
 
 var deskcontents="";
@@ -42,7 +42,11 @@ if(coinfaces.length%columns!=0){deskcontents=deskcontents+"</tr></table>"}
 document.getElementById("desk").innerHTML=deskcontents;
 
 var coinstate=[];
-for(i=0; i<coinfaces.length; i++){coinfaces[i].push("Tick.png"); coinstate[i]={flipping:0, t:0, side:0, faces:coinfaces[i]}}
+for(i=0; i<coinfaces.length; i++){
+  if(Math.random()>0.5){coinfaces[i].push("Tick.png")}
+  else{coinfaces[i].push("Tick2.png")}
+  coinstate[i]={flipping:0, t:0, side:0, faces:coinfaces[i]}
+}
 
 var time=0;
 var maxtime=14;
@@ -59,7 +63,11 @@ function progressframe(){
   if(time>maxtime){time=0}
   for(i=0; i<coinfaces.length; i++){
     if(coinstate[i].flipping==1){document.getElementById(i).style.width=(Math.cos(2*Math.PI*(time-coinstate[i].t)/maxtime)+1)*coinwidth/2+"px";}
-    if(Math.abs(time-coinstate[i].t)==maxtime/2 && coinstate[i].flipping==1){document.getElementById(i).src=coinstate[i].faces[coinstate[i].side];}
+    if(Math.abs(time-coinstate[i].t)==maxtime/2 && coinstate[i].flipping==1){
+      if(Math.random()>0.5){coinstate[i].faces[coinstate[i].faces.length-1]="Tick.png"}
+      else{coinstate[i].faces[coinstate[i].faces.length-1]="Tick2.png"}
+      document.getElementById(i).src=coinstate[i].faces[coinstate[i].side];
+    }
     if(coinstate[i].t==time && coinstate[i].flipping==1){coinstate[i].flipping=0;}
   }
   setTimeout(progressframe, 1000/fps)
