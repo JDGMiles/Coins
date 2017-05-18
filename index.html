@@ -12,9 +12,9 @@
 
 <script type="text/javascript">
 
-var coinfaces=[["Exercise.gif"], ["Work2.gif", "Work1.gif"], ["Japanese.png", "Cello.png", "Piano.png"]];
+var coinfaces=[["Exercise.gif"], ["Work2.gif"], ["Japanese.png"], ["Cello.png"]];
 
-var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999)+1;
+var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999);
 var rows=Math.round(coinfaces.length/columns+0.4999);
 
 var coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));
